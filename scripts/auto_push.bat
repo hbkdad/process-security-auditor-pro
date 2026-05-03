@@ -1,7 +1,18 @@
 @echo off
-cd /d "%~dp0\.."
-for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd_HH-mm-ss"') do set datetime=%%i
+cd /d %~dp0\..
+
+echo ============================
+echo Auto commit + push to GitHub
+echo ============================
+
+git status
 git add .
-git commit -m "auto update %datetime%"
+
+set /p msg="Commit message: "
+if "%msg%"=="" set msg=auto update
+
+git commit -m "%msg%"
 git push origin main
+
+echo Done.
 pause
